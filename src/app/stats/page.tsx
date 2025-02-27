@@ -2,16 +2,49 @@ import { Stats, columns } from "./columns"
 import { DataTable } from "./data-table"
 import { Badge } from "@/components/ui/badge";
 import * as React from "react"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+
+  // This is not supposed to be here, as I will have to get most of my data from the database and not from the API.
+  // But I'm just testing it out. This will have to move to a separate file and be utilized in the @/app/page.tsx file & @/app/servers/page.tsx file.
+  // I'm gonna take inspiration from https://playpark.se/ and show some servers on the home page and then have the rest in @/app/servers/page.tsx.
+
+export type Servers = {
+  id: string
+  ip: string
+  port: string
+  game: string
+  platform: string
+}
+
+const Servers = [
+  {
+    id: "retake",
+    ip: "179.61.132.128",
+    port: "27015",
+    game: "CS2",
+    platform: "Steam"
+  },
+  {
+    id: "fivem",
+    ip: "103.177.248.111",
+    port: "30120",
+    game: "FiveM",
+    platform: "FiveM"
+  }
+]
  
 async function getData(): Promise<Stats[]> {
-  // Fetch data from database here.
+  // Move this!
+  // FiveM server API query
+  // const res = await fetch(`http://${Servers[0].ip}:${Servers[0].port}/info.json`)
+  // const data = await res.json()
+  // console.log(data)
+
+  // CS2 server API query
+  // const res = await fetch(`https://api.steampowered.com/IGameServersService/GetServerList/v1/?key=F941F61503D2F7B047FB99DF1F5AE1F2&filter=addr%5C${Servers[0].ip}:${Servers[0].port}`)
+  // const data = await res.json()
+  // console.log(data.response.servers[0])
+
   return [
     {
       id: "728ed52f",
@@ -152,7 +185,7 @@ async function getData(): Promise<Stats[]> {
 }
 
 export default async function Statistics() {
-    const data = await getData()
+  const data = await getData()
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-x-32 gap-y-4 sm:p-20 w-full">
       <div className="flex flex-col row-start-2 items-center sm:items-start">
